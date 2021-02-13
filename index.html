@@ -23,8 +23,7 @@ const xhr = new XMLHttpRequest;
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     // フォームに入力した値をリクエストとして設定
     let name = document.getElementsByName('name')
-    json = JSON.stringify(name);
-    xhr.send(json);
+    xhr.send();
 
     xhr.onreadystatechange = function() {
 
