@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 <body>
-    <form  method="POST" onsubmit="checkText()">
-        名前を入力してね:<input type="text" name="name">
-        <input type="submit" >
-    </form>
+  <form >
+    <input type="text" name="name" >
+    <input type="button" onclick="get()" value="送信">
+  </form>
+    <div id="result"></div>
 </body>
-</html>
 
 <script>
-const xhr = new XMLHttpRequest;
 
- function checkText() {
+  function get(){
 
-    xhr.open('POST', 'ajax_info.txt', true);
-    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    // フォームに入力した値をリクエストとして設定
-    let name = document.getElementsByName('name')
-    xhr.send();
+  let xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4 && xhr.status == 200){
+        let result = document.getElementById("result");
+        result.innerHTML = xhr.responseText;
+      }
+  }
 
-        if(xhr.readyState === 4 && xhr.status === 200 ) {
-            console.log( xhr.responseText);
-        }
-
-    }
-
- }
+  xhr.open('post', 'sample.php', true);
+  xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+  let req = "name=" + document.getElementsByName("name")[0].value;
+  xhr.send(req);
+}
 
 </script>
+</html>
