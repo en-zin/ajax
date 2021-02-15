@@ -7,14 +7,25 @@
   <title>Document</title>
 </head>
 <body>
-  <form >
-    <input type="text" name="name" >
-    <input type="button" onclick="get()" value="送信">
+  <form>
+    	<div>
+     		<label for="title">タイトル</label>
+      	<input id="title" type="text" name="title" value="">
+    	</div>
+
+    	<div>
+     		<label for="contents">記事の内容</label>
+     		<textarea name="text" id="contents" cols="30" rows="10"></textarea>
+    	</div>
+
+    	<input class="" id="btn" type="button" value="送信" onclick="get()">
   </form>
     <div id="result"></div>
 </body>
 
 <script>
+
+  let xhr = new XMLHttpRequest();
 
   function get(){
 
@@ -29,9 +40,22 @@
 
   xhr.open('post', 'sample.php', true);
   xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-  let req = "name=" + document.getElementsByName("name")[0].value;
+  let title =  document.getElementsByName("title")[0].value;
+  let text =  document.getElementsByName("text")[0].value;
+  let req = "title=" + title + "&text=" + text ;
   xhr.send(req);
 }
+
+
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4 && xhr.status == 200){
+        let result = document.getElementById("result");
+        result.innerHTML = xhr.responseText;
+      }
+  }
+  
+  xhr.open('get', 'sample.php', true);
+  xhr.send();
 
 </script>
 </html>
